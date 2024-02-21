@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMI", "HMI\HMI.csproj", "{1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingApi", "BookingApi\BookingApi.csproj", "{194A3173-3ED9-479E-A3C2-263820743840}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarApi", "CalendarApi\CalendarApi.csproj", "{B1FB71EE-109A-4BEC-8CA7-F3A4073692CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{194A3173-3ED9-479E-A3C2-263820743840}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{194A3173-3ED9-479E-A3C2-263820743840}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{194A3173-3ED9-479E-A3C2-263820743840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1FB71EE-109A-4BEC-8CA7-F3A4073692CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1FB71EE-109A-4BEC-8CA7-F3A4073692CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1FB71EE-109A-4BEC-8CA7-F3A4073692CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1FB71EE-109A-4BEC-8CA7-F3A4073692CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
