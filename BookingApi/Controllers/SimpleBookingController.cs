@@ -2,6 +2,7 @@
 using BookingApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
 
 namespace BookingApi.Controllers
 {
@@ -10,10 +11,12 @@ namespace BookingApi.Controllers
     public class SimpleBookingController : ControllerBase
     {
         private readonly BookingApiDbContext _context;
+        private readonly HttpClient _httpClient;
 
-        public SimpleBookingController(BookingApiDbContext context)
+        public SimpleBookingController(BookingApiDbContext context,IHttpClientFactory httpClient)
         {
             _context = context;
+            _httpClient = httpClient.CreateClient();
         }
 
         // GET: api/SimpleBookings
@@ -85,6 +88,24 @@ namespace BookingApi.Controllers
           {
               return Problem("Entity set 'BookingApiDbContext.SimpleBooking'  is null.");
           }
+
+            // Add check appointment availability
+            string availabilityUrl = $"https://localhost:7002/api/SimpleCalendarModels/CheckAppointmentAvailability" +
+                  $"?consultantName={simpleBooking.ConsultantName}" +
+                  $"&appointmentDate={simpleBooking.AppointmentDate}";
+
+            var isAvailable = await _httpClient.GetAsync(availabilityUrl);
+
+            if (isAvailable.IsSuccessStatusCode)
+            {
+                var isAvailableResponse = await isAvailable.Content.ReadFromJsonAsync<bool>();
+
+                if (!isAvailableResponse)
+                {
+                    return BadRequest("KO");
+                }
+            }
+
             _context.SimpleBooking.Add(simpleBooking);
             await _context.SaveChangesAsync();
 

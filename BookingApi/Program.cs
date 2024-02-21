@@ -10,6 +10,9 @@ var connectionString = builder.Configuration.GetConnectionString("BookingConnect
 builder.Services.AddDbContext<BookingApiDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// check appointment availability
+builder.Services.AddHttpClient();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

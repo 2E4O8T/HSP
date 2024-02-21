@@ -115,5 +115,14 @@ namespace CalendarApi.Controllers
         {
             return (_context.SimpleCalendar?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        // Add check appointment availability
+        [HttpGet("CheckAppointmentAvailability")]
+        public async Task<ActionResult<bool>> CheckAppointmentAvailability(string consultantName, DateTime appointmentDate)
+        {
+            var isAvailable = await _context.SimpleCalendar.AnyAsync(a=>a.ConsultantName == consultantName && a.AppointmentDate == appointmentDate);
+
+            return isAvailable;
+        }
     }
 }
