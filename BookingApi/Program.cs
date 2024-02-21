@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add database connection
 var connectionString = builder.Configuration.GetConnectionString("BookingConnection");
-builder.Services.AddDbContext<BookingApiDbContext>(options=>
+builder.Services.AddDbContext<BookingApiDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers();

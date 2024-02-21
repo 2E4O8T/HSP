@@ -1,4 +1,12 @@
+using CalendarApi.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add database connection
+var connectionString = builder.Configuration.GetConnectionString("CalendarConnection");
+builder.Services.AddDbContext<CalendarApiDbContext>(option =>
+    option.UseSqlServer(connectionString));
 
 // Add services to the container.
 
