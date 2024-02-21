@@ -1,5 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Add logging
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+});
+
+// Add HttpClient
+builder.Services.AddHttpClient();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

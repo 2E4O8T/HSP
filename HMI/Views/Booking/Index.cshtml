@@ -1,5 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<HMI.Models.BookingDto>
+
 @{
+    ViewData["Title"] = "Index";
 }
+<section id="appointments list" class="section-padding">
+    <div class="container">
+        <h2>Liste des rendez-vous</h2>
+        
+        <div><a asp-action="Create">Ajouter un rendez-vous</a></div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model=>model.PatientName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model=>model.ConsultantName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model=>model.ConsultantSpecialty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model=>model.AppointmentDate)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem=>item.PatientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem=>item.ConsultantName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem=>item.ConsultantSpecialty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem=>item.AppointmentDate)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
