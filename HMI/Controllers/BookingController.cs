@@ -1,5 +1,7 @@
 ﻿using HMI.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Text.Json;
 
 namespace HMI.Controllers
 {
@@ -33,6 +35,32 @@ namespace HMI.Controllers
                 _logger.LogError("Error retrieving appointments");
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(BookingDto appointment)
+        {
+            var content = new StringContent(JsonSerializer.Serialize(appointment), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("/gateway/simplebooking", content);
+
+            if(response.IsSuccessStatusCode)
+            {
+                _logger.LogInformation($"{response.StatusCode} : Appointment added successfully");
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _logger.LogError($"{response.StatusCode} : Something went wrong");
+
+                return View(appointment);
             }
         }
     }
