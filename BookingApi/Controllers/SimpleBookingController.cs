@@ -90,7 +90,7 @@ namespace BookingApi.Controllers
           }
 
             // Add check appointment availability
-            string availabilityUrl = $"https://localhost:7002/api/SimpleCalendarModels/CheckAppointmentAvailability" +
+            string availabilityUrl = $"https://localhost:7002/api/SimpleCalendar/CheckAppointmentAvailability" +
                   $"?consultantName={simpleBooking.ConsultantName}" +
                   $"&appointmentDate={simpleBooking.AppointmentDate}";
 

@@ -2,6 +2,7 @@
 using CalendarApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace CalendarApi.Controllers
 {
@@ -118,9 +119,10 @@ namespace CalendarApi.Controllers
 
         // Add check appointment availability
         [HttpGet("CheckAppointmentAvailability")]
-        public async Task<ActionResult<bool>> CheckAppointmentAvailability(string consultantName, DateTime appointmentDate)
+        public async Task<ActionResult<bool>> CheckAppointmentAvailability(string consultantName, DateTime appointmentDate)    //string consultantName, DateTime appointmentDate
         {
-            var isAvailable = await _context.SimpleCalendar.AnyAsync(a=>a.ConsultantName == consultantName && a.AppointmentDate == appointmentDate);
+            //var isAvailable = await _context.SimpleCalendar.AnyAsync(a => a.FormatedAppointmentDate == appointmentDate);
+            var isAvailable = !await _context.SimpleCalendar.AnyAsync(a => a.ConsultantName == consultantName && a.AppointmentDate == appointmentDate);
 
             return isAvailable;
         }

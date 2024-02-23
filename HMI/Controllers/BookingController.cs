@@ -60,7 +60,7 @@ namespace HMI.Controllers
             {
                 _logger.LogError($"{response.StatusCode} : Something went wrong");
 
-                return View(appointment);
+                return View("Error");
             }
         }
     }

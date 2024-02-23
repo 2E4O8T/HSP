@@ -1,7 +1,48 @@
 using BookingApi.Data;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//// <snippet_LocalizationConfigurationServices>
+//builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+//builder.Services.AddMvc()
+//    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+//    .AddDataAnnotationsLocalization();
+//// </snippet_LocalizationConfigurationServices>
+
+//// <snippet_RequestLocalizationOptionsConfiguration>
+//builder.Services.Configure<RequestLocalizationOptions>(options =>
+//{
+//    var supportedCultures = new[] { "fr-FR", "fr" };
+//    options.SetDefaultCulture(supportedCultures[0])
+//        .AddSupportedCultures(supportedCultures)
+//        .AddSupportedUICultures(supportedCultures);
+//});
+//// </snippet_RequestLocalizationOptionsConfiguration>
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("fr-FR"),
+        new CultureInfo("fr")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture(culture: "fr-FR", uiCulture: "fr-FR");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+
+    options.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(async context =>
+    {
+        // My custom request culture logic
+        return await Task.FromResult(new ProviderCultureResult("fr"));
+    }));
+});
 
 // Add services to the container.
 
@@ -28,6 +69,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//// <snippet_ConfigureLocalization>
+//var localizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+//app.UseRequestLocalization(localizationOptions.Value);
+//// </snippet_ConfigureLocalization>
 
 app.UseAuthorization();
 

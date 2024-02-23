@@ -8,5 +8,7 @@ namespace CalendarApi.Models
         public string ConsultantName { get; set; } = string.Empty;
         [DataType(DataType.Date)]
         public DateTime AppointmentDate { get; set; } = DateTime.Now;
+
+        public string FormatedAppointmentDate => AppointmentDate.ToString("dd/MM/yyyy");
     }
 }
