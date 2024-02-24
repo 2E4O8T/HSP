@@ -1,9 +1,24 @@
+using HMI.Data;
+using HMI.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add database connection
+var connectionString = builder.Configuration.GetConnectionString("UserConnection");
+builder.Services.AddDbContext<UserDbContext>(options=>
+    options.UseSqlServer(connectionString));
+
+// Add identity
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddDefaultTokenProviders();
+
+// Add services
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 //// <snippet_LocalizationConfigurationServices>
 //builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -79,6 +94,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Authentication}/{action=Register}/{id?}");
 
 app.Run();
