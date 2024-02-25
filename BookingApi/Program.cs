@@ -1,9 +1,12 @@
 using BookingApi.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +48,23 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 // Add services to the container.
+// Add jwt bearer
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            RequireExpirationTime = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration.GetSection("JwtConfig:Issuer").Value,
+            ValidAudience = builder.Configuration.GetSection("JwtConfig:Audience").Value,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value))
+        };
+    });
 
 // Add database connection
 var connectionString = builder.Configuration.GetConnectionString("BookingConnection");
@@ -74,7 +94,7 @@ app.UseHttpsRedirection();
 //var localizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
 //app.UseRequestLocalization(localizationOptions.Value);
 //// </snippet_ConfigureLocalization>
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

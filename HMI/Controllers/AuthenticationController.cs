@@ -1,16 +1,17 @@
 ﻿using HMI.Models;
 using HMI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HMI.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IAuthService _authService;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(IAuthService authService)
         {
-            _authenticationService = authenticationService;
+            _authService = authService;
         }
 
         public IActionResult Register()
@@ -19,16 +20,54 @@ namespace HMI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterDto model)
+        public async Task<IActionResult> RegisterAsync([FromBody]RegisterDto model)
         {
             if (!ModelState.IsValid) 
-            { 
-                return View(model); 
+            {
+                return View(model);
             }
-            
-            var result = await _authenticationService.RegisterAsync(model);
+
+            var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.StatusMessage;
+            
             return RedirectToAction(nameof(Register));
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+                
+            var result = await _authService.LoginAsync(model);
+
+            var jwtToken = result.Token;
+
+            if (result.StatusCode == 1 && jwtToken != string.Empty)
+            {
+                return RedirectToAction("Index", "Home", new { token = jwtToken});
+            }
+            else
+            {
+                TempData["msg"] = result.StatusMessage;
+
+                return RedirectToAction(nameof(Login));
+            }
+        }
+
+        //[Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _authService.LogoutAsync();
+
+            return RedirectToAction(nameof(Login));
         }
     }
 }
