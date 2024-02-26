@@ -16,17 +16,33 @@
       "UpstreamHttpMethod": [ "Get", "Delete" ]
     },
     {
-      "DownstreamPathTemplate": "/api/simplebooking",
+      "UpstreamPathTemplate": "/gateway/simplebooking",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
       "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/simplebooking",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/gateway/simplebooking",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": [ "Bearer", "Secret" ],
+        "AllowedScopes": []
+      }
     },
+    //{
+    //  "DownstreamPathTemplate": "/api/simplebooking",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 7001
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/gateway/simplebooking",
+    //  "UpstreamHttpMethod": [ "Get", "Post" ]
+    //},
     {
       "DownstreamPathTemplate": "/api/booking/{id}",
       "DownstreamScheme": "https",

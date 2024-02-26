@@ -24,6 +24,8 @@ namespace BookingApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SimpleBooking>>> GetAllSimpleBookings()
         {
+         var userId = User.Identity.Name;
+
           if (_context.SimpleBooking == null)
           {
               return NotFound();

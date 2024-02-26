@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMI", "HMI\HMI.csproj", "{14A900F0-B84D-48EA-A353-7D83F51F8E02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HMI", "HMI\HMI.csproj", "{14A900F0-B84D-48EA-A353-7D83F51F8E02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingApi", "BookingApi\BookingApi.csproj", "{194A3173-3ED9-479E-A3C2-263820743840}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingApi", "BookingApi\BookingApi.csproj", "{194A3173-3ED9-479E-A3C2-263820743840}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarApi", "CalendarApi\CalendarApi.csproj", "{B1FB71EE-109A-4BEC-8CA7-F3A4073692CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarApi", "CalendarApi\CalendarApi.csproj", "{B1FB71EE-109A-4BEC-8CA7-F3A4073692CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Gateway\Gateway.csproj", "{FB9441DA-05E9-4F91-A778-BAC8F48F288C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway", "Gateway\Gateway.csproj", "{FB9441DA-05E9-4F91-A778-BAC8F48F288C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
